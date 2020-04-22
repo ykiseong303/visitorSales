@@ -4,7 +4,7 @@
 dae_up <- read_excel("kwangju_dong.xlsx",sheet='Sheet1')
 
 
-dae_up_plot <- ggplot(dae_up,(aes(x=reorder(MAIN_BUZ_DESC,sum_sale),y=sum_sale,fill=sum_sale))) +
+dae_up_plot <- ggplot(dae_up,(aes(x=reorder(DAE,sum_sale),y=sum_sale,fill=sum_sale))) +
   geom_bar(stat='identity',color="black")+
   geom_text(aes(label=sum_sale),vjust=-0.2)+
   scale_fill_gradient(low="#FFE679",high="#FF8D1D") + 
@@ -24,7 +24,7 @@ jng_up <- read_excel("kwangju_dong.xlsx",sheet='Sheet2-1')
 
 
 jng_up_head <- head(jng_up,10)
-jng_up_plot <- ggplot(data=jng_up_head,aes(x=reorder(TP_GRP_NM,sum_sale),y=sum_sale,fill=sum_sale))+
+jng_up_plot <- ggplot(data=jng_up_head,aes(x=reorder(JNG,sum_sale),y=sum_sale,fill=sum_sale))+
   geom_bar(stat='identity',color="black")+
   geom_text(aes(label=sum_sale),vjust=-0.2)+
   scale_fill_gradient(low="#FFE679",high="#FF8D1D") + 
@@ -49,15 +49,15 @@ so_up <- read_excel("kwangju_dong.xlsx",sheet='Sheet2-2')
 total_sum <- sum(so_up$sum_sale)
 
 so_up_1 <- so_up
-so_up_1$TP_BUZ_NM <- factor(so_up_1$TP_BUZ_NM, levels=rev(as.character(so_up_1$TP_BUZ_NM)))
+so_up_1$so <- factor(so_up_1$so, levels=rev(as.character(so_up_1$so)))
 
 midpoint <- cumsum(so_up_1$sum_sale) - so_up_1$sum_sale/5
 
 
-so_up_pie_plot <- ggplot(so_up_1, aes(x="",sum_sale,fill=TP_BUZ_NM)) + 
+so_up_pie_plot <- ggplot(so_up_1, aes(x="",sum_sale,fill=so)) + 
   geom_bar(width=1,size=1,color="white",stat="identity") + 
   coord_polar("y") +
-  geom_text(aes(label=paste0(round((sum_sale/total_sum*100),1),"%\n",TP_BUZ_NM)),
+  geom_text(aes(label=paste0(round((sum_sale/total_sum*100),1),"%\n",so)),
             position = position_stack(vjust = 0.5),size=4) +
   labs(x = NULL, y = NULL, fill = NULL) +
   ggtitle("업종별 매출 비율(소분류)")+
